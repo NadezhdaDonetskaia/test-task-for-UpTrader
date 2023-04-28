@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "test-task-for-uptrader"
+version = "0.1.0"
+description = ""
+authors = ["Nella <nella611@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "test_task_for_uptrader"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2"
+python-dotenv = "^1.0.0"
+dj-database-url = "^2.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
