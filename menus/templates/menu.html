@@ -1,0 +1,14 @@
+{% load menu_tags %}
+
+<ul>
+  {% recursetree root_items %}
+    <li>
+      {{ node.title }}
+      {% if not node.is_leaf_node %}
+        <ul>
+          {{ children }}
+        </ul>
+      {% endif %}
+    </li>
+  {% endrecursetree %}
+</ul>
