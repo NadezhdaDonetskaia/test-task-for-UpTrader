@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from project import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.menu_view),
+    path('<str:current_url>', views.menu_view),
 ]
