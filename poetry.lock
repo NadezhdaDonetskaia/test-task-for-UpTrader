@@ -39,6 +39,14 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "logger"
+version = "1.4"
+description = "Python logging helper"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -81,7 +89,7 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "e763de39a4c8d8c09da365acf77be6c63239ed15cfaa86cf557388285176b236"
+content-hash = "abe604fc63694011bd7f2ab4d0cb3717bf718bee483df7f5e10878f0934a5354"
 
 [metadata.files]
 asgiref = [
@@ -95,6 +103,9 @@ dj-database-url = [
 django = [
     {file = "Django-4.2-py3-none-any.whl", hash = "sha256:ad33ed68db9398f5dfb33282704925bce044bef4261cd4fb59e4e7f9ae505a78"},
     {file = "Django-4.2.tar.gz", hash = "sha256:c36e2ab12824e2ac36afa8b2515a70c53c7742f0d6eaefa7311ec379558db997"},
+]
+logger = [
+    {file = "logger-1.4.tar.gz", hash = "sha256:4ecac57133c6376fa215f0fe6b4dc4d60e4d1ad8be005cab4e8a702df682f8b3"},
 ]
 python-dotenv = [
     {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},

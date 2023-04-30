@@ -1,14 +1,9 @@
-from django.views.generic import TemplateView
-from django.urls import resolve
+from django.shortcuts import render, get_object_or_404
+from menus.models import Menu
+from logger_config import logger
 
-from .models import MenuItem
 
-
-class MenuView(TemplateView):
-    template_name = 'menu.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['current_url'] = self.request.path
-        context['menus'] = MenuItem.objects.filter(parent__isnull=True)
-        return context
+def render_menu(request, menu_name):
+    menu = get_object_or_404(Menu, menu_name=menu_name)
+    logger.error(menu.menu_name)
+    return render(request, 'menu_render.html', {'menu': menu})

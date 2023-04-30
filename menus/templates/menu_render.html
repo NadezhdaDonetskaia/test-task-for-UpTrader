@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ menu.menu_name }}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12">
+      <nav>
+        <ul class="nav">
+          {% load menu_tags %}
+          {% draw_menu menu.menu_name %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+{% endblock %}

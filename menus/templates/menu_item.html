@@ -1,0 +1,15 @@
+{% if item.url %}
+  <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+{% else %}
+  <li>{{ item.title }}</li>
+{% endif %}
+
+{% if children %}
+    <ul>
+    {% for child in children %}
+        <li>
+            <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}

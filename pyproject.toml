@@ -13,6 +13,9 @@ python-dotenv = "^1.0.0"
 dj-database-url = "^2.0.0"
 
 
+[tool.poetry.group.dev.dependencies]
+logger = "^1.4"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,35 +1,34 @@
 from django import template
 
-from menus.models import MenuItem
+import logger_config
+from menus.models import Menu
 
 
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True)
-def draw_menu(context, menu_name):
-    menu_items = MenuItem.objects.all()
-    active_menu = menu_items.filter(menu_name=menu_name).first()
+@register.inclusion_tag('menu.html')
+def draw_menu(selected_menu=None):
+    children = None
+    menu_name = None
+    logger_config.logger.error('start draw_menu')
+    menu = None
+    if selected_menu:
+        menu = Menu.objects.prefetch_related('menu_items').get(menu_name=selected_menu)
+        logger_config.logger.error(f'menu {menu}')
+        menu_name = menu.menu_name
+        items = menu.menu_items.filter(parent=None)
+        children = menu.menu_items.filter(parent=menu)
+    else:
+        menus = Menu.objects.all().prefetch_related('menu_items')
+        items = []
+        for menu in menus:
+            menu_items = menu.menu_items.filter(parent=None)
+            items.extend(menu_items)
+    logger_config.logger.error('finish draw_menu')
+    logger_config.logger.error('menu_name', menu_name)
+    logger_config.logger.error('items', items)
+    logger_config.logger.error('children', children)
+    logger_config.logger.error('menu', menu)
 
-    def draw_list(menu_item):
-        if menu_item == active_menu:
-            return f'<li class="active"><a href="{menu_item.url}">{menu_item.menu_name}</a></li>'
-        return f'<li><a href="{menu_item.url}">{menu_item.menu_name}</a></li>'
-
-    menu_html = ''
-
-    def get_rendered_parents(menu_item):
-        if menu_item.parent is None:
-            return draw_list(menu_item)
-        else:
-            parent = menu_items.filter(menu_name=menu_item.parent.menu_name).first()
-            return get_rendered_parents(parent) + draw_list(menu_item)
-
-    menu_html += get_rendered_parents(active_menu)
-    children_active_menu = menu_items.filter(parent=active_menu).first()
-    if children_active_menu:
-        menu_html += draw_list(children_active_menu)
-    return menu_html
-
-
-
+    return {'items': items, 'children': children, 'menu_name': menu_name, 'menu': menu}

@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 
-from project.views import HomeView
+from project.views import home
 from menus import urls as menu_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view()),
-    path('menu/', include(menu_urls)),
+    path('', home),
+    path('menus/', include(menu_urls)),
 ]
