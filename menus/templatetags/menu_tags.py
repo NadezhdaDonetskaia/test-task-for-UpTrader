@@ -1,6 +1,4 @@
 from django import template
-from django.urls import reverse
-from django.db.models import Prefetch
 
 from menus.models import MenuItem
 
@@ -10,35 +8,28 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def draw_menu(context, menu_name):
-    request = context['request']
+    menu_items = MenuItem.objects.all()
+    active_menu = menu_items.filter(menu_name=menu_name).first()
 
-    menu_items = MenuItem.objects.select_related('parent').prefetch_related(
-        Prefetch('children', queryset=MenuItem.objects.select_related('parent'))
-    ).filter(menu_name=menu_name).order_by('parent_id', 'pk')
+    def draw_list(menu_item):
+        if menu_item == active_menu:
+            return f'<li class="active"><a href="{menu_item.url}">{menu_item.menu_name}</a></li>'
+        return f'<li><a href="{menu_item.url}">{menu_item.menu_name}</a></li>'
 
-    return _draw_menu(menu_items, request)
+    menu_html = ''
 
-
-def _draw_menu(menu_items, request):
-    menu_html = '<ul>'
-
-    for item in menu_items:
-        is_active = item.is_active(request)
-        has_children = item.children.exists()
-
-        if is_active:
-            menu_html += f'<li class="active">'
+    def get_rendered_parents(menu_item):
+        if menu_item.parent is None:
+            return draw_list(menu_item)
         else:
-            menu_html += '<li>'
+            parent = menu_items.filter(menu_name=menu_item.parent.menu_name).first()
+            return get_rendered_parents(parent) + draw_list(menu_item)
 
-        if has_children:
-            menu_html += f'<a href="{item.url}" class="dropdown-toggle" data-toggle="dropdown">{item.menu_name}<span class="caret"></span></a>'
-            menu_html += _draw_menu(item.children.all(), request)
-        else:
-            url = item.url
-            menu_html += f'<a href="{url}">{item.menu_name}</a>'
-
-        menu_html += '</li>'
-
-    menu_html += '</ul>'
+    menu_html += get_rendered_parents(active_menu)
+    children_active_menu = menu_items.filter(parent=active_menu).first()
+    if children_active_menu:
+        menu_html += draw_list(children_active_menu)
     return menu_html
+
+
+
