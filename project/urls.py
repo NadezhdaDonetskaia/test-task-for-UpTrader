@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from menus import views
+
+from project.views import HomeView
+from menus import urls as menu_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.menu_view),
-    path('<str:current_url>', views.menu_view),
+    path('', HomeView.as_view()),
+    path('menu/', include(menu_urls)),
 ]

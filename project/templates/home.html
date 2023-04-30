@@ -9,23 +9,11 @@
     <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {% for menu in menus %}
-
-                {% load menu_tags %}
-
-                    {% if menu.url == current_url %}
-
-                        {% autoescape off %}
-                        {% draw_menu menu.menu_name %}
-                        {% endautoescape %}
-                        <br>
-                    {% else %}
-                        <a class="nav-link dropdown-toggle" href="{{ menu.url }}" id="navbarDropdown{{ menu.menu_name }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="{{ menu.url }}" id="navbarDropdown{{ menu.menu_name }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ menu.menu_name }} <br>
                     </a>
-                    {% endif %}
                 {% endfor %}
             </ul>
     </div>
 </nav>
 {% endblock %}
-

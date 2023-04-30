@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import resolve
 
 
 class MenuItem(models.Model):
@@ -9,3 +10,7 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.menu_name
+
+    def is_active(self, request):
+        resolved_url = resolve(request.path_info)
+        return self.url == resolved_url.url_name
