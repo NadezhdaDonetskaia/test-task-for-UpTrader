@@ -19,10 +19,8 @@ from django.urls import path, include
 
 
 from project.views import home
-from menus import urls as menu_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('menus/', include(menu_urls)),
 ]

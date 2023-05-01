@@ -1,10 +1,16 @@
-{% if not items %}
-  <p>Меню не найдено</p>
-{% else %}
-{% if menu %}
-    <p>Меню "{{ menu.menu_name }}"</p>
-  {% endif %}
+<h4>Меню "{{ menu_name }}"</h4>
+<!--Если есть активный пункт, то отрисовываем-->
+{% if has_active_item%}
   {% for item in items %}
     {% include 'menu_item.html' with item=item %}
+  {% endfor %}
+<!--если нет, то только первые пункты (у которых нет parant-->
+{% else %}
+  {% for item in items %}
+    <ul>
+        <li>
+            <a href="{{ item.url }}">{{ item.title }}</a>
+        </li>
+    </ul>
   {% endfor %}
 {% endif %}

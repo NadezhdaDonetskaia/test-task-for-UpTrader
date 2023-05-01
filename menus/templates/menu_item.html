@@ -1,15 +1,25 @@
-{% if item.url %}
-  <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+<!--если это выбранный пункт, то рисуем его плюс его детей-->
+{% if item.is_active %}
+  <li class="active">
+      <a href="{{ item.url }}">{{ item.title }}</a>
+  </li>
+      {% if children %}
+        <ul>
+        {% for child in children %}
+            <li>
+                <a href="{{ child.url }}">{{ child.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+<!--если нет, то рекурсивно отрисовываем пункты меню -->
 {% else %}
-  <li>{{ item.title }}</li>
-{% endif %}
-
-{% if children %}
-    <ul>
-    {% for child in children %}
-        <li>
-            <a href="{{ child.get_absolute_url }}">{{ child.title }}</a>
-        </li>
-    {% endfor %}
-    </ul>
+  <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        {% if children %}
+        <ul>
+            {% for child in children %}
+                {% include 'menu_item.html' with item=child %}
+            {% endfor %}
+        </ul>
+        {% endif %}
 {% endif %}

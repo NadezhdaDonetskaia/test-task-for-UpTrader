@@ -10,9 +10,9 @@
         <ul>
           {% load menu_tags %}
           {% for menu in menus %}
-          <li><a href="{% url 'draw_menu' menu.menu_name %}">{{ menu.menu_name }}</a>
+
             {% draw_menu menu.menu_name %}
-          </li>
+
         {% endfor %}
         </ul>
       </nav>

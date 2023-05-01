@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import resolve
+from logger_config import logger
 
 
 class Menu(models.Model):
@@ -21,4 +22,6 @@ class MenuItem(models.Model):
 
     def is_active(self, request):
         resolved_url = resolve(request.path_info)
+        logger.error(f'resolved_url {resolved_url}')
+        logger.error(f'self.url {self.url}')
         return self.url == resolved_url.url_name
