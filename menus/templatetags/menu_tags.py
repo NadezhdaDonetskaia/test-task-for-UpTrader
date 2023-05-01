@@ -7,8 +7,9 @@ from menus.models import Menu
 register = template.Library()
 
 
-@register.inclusion_tag('menu.html')
-def draw_menu(selected_menu_name):
+@register.inclusion_tag('menu.html', takes_context=True)
+def draw_menu(context, selected_menu_name):
+    request = context['request']
     logger_config.logger.error('start draw_menu')
     menu = Menu.objects.prefetch_related('menu_items').get(menu_name=selected_menu_name)
     logger_config.logger.error(f'menu {menu}')
@@ -17,11 +18,11 @@ def draw_menu(selected_menu_name):
     has_active_item = False
 
     for item in items:
-        if item.is_active:
+        if item.is_active(request):
             has_active_item = True
             break
     for child in children:
-        if child.is_active:
+        if child.is_active(request):
             has_active_item = True
             break
 
