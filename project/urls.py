@@ -23,4 +23,5 @@ from project.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
+    path('<path:current_path>/', home),
 ]

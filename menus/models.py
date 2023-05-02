@@ -21,7 +21,7 @@ class MenuItem(models.Model):
         return self.title
 
     def is_active(self, request):
-        resolved_url = resolve(request.path_info)
-        logger.error(f'resolved_url {resolved_url}')
+        current_url = request.path_info
+        logger.error(f'resolved_url {current_url}')
         logger.error(f'self.url {self.url}')
-        return self.url == resolved_url.url_name
+        return self.url == current_url
