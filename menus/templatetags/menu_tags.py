@@ -23,7 +23,7 @@ def draw_menu(context, selected_menu_name):
             break
     for child in children:
         if child.is_active(request):
-            active_item = item
+            active_item = child
             break
 
     logger_config.logger.error(f'active_item is {active_item}')
