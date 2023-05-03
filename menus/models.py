@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import resolve
 from logger_config import logger
 
 
@@ -25,3 +24,9 @@ class MenuItem(models.Model):
         logger.error(f'resolved_url {current_url}')
         logger.error(f'self.url {self.url}')
         return self.url == current_url
+
+    def has_children(self):
+        return self.children.exists()
+
+    def get_first_children(self):
+        return MenuItem.objects.filter(parent=self)

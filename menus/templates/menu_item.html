@@ -3,9 +3,9 @@
   <li class="active">
       <a href="{{ item.url }}">{{ item.title }}</a>
   </li>
-      {% if children %}
+      {% if item.has_children %}
         <ul>
-        {% for child in children %}
+        {% for child in item.get_first_children %}
             <li>
                 <a href="{{ child.url }}">{{ child.title }}</a>
             </li>
@@ -15,9 +15,9 @@
 <!--если нет, то рекурсивно отрисовываем пункты меню -->
 {% else %}
   <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-        {% if children %}
+        {% if item.has_children %}
         <ul>
-            {% for child in children %}
+            {% for child in item.get_first_children %}
                 {% include 'menu_item.html' with item=child %}
             {% endfor %}
         </ul>
