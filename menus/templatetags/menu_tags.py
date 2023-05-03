@@ -15,17 +15,17 @@ def draw_menu(context, selected_menu_name):
     logger_config.logger.error(f'menu {menu}')
     items = menu.menu_items.filter(parent=None)
     children = menu.menu_items.filter(parent__isnull=False)
-    has_active_item = False
+    active_item = None
 
     for item in items:
         if item.is_active(request):
-            has_active_item = True
+            active_item = item
             break
     for child in children:
         if child.is_active(request):
-            has_active_item = True
+            active_item = item
             break
 
-    logger_config.logger.error(f'has_active_item is {has_active_item}')
+    logger_config.logger.error(f'active_item is {active_item}')
     logger_config.logger.error('finish draw_menu')
-    return {'items': items, 'children': children, 'menu_name': menu, 'has_active_item': has_active_item}
+    return {'items': items, 'children': children, 'menu_name': menu, 'active_item': active_item}
