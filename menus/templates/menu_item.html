@@ -1,5 +1,5 @@
 <!--если это выбранный пункт, то рисуем его плюс его детей-->
-{% if item.is_active %}
+{% if item is active_item %}
   <li class="active">
       <a href="{{ item.url }}">{{ item.title }}</a>
   </li>

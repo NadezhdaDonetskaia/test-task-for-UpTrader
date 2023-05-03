@@ -1,6 +1,6 @@
 <h4>Меню "{{ menu_name }}"</h4>
 <!--Если есть активный пункт, то отрисовываем-->
-{% if has_active_item%}
+{% if active_item%}
   {% for item in items %}
     {% include 'menu_item.html' with item=item %}
   {% endfor %}

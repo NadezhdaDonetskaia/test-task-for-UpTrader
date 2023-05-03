@@ -20,13 +20,18 @@ class MenuItem(models.Model):
         return self.title
 
     def is_active(self, request):
-        current_url = request.path_info
-        logger.error(f'resolved_url {current_url}')
+        current_url = request.path
+        logger.error(f'current_url {current_url}')
         logger.error(f'self.url {self.url}')
+        logger.error(f'{self} is active {self.url == current_url}')
         return self.url == current_url
 
     def has_children(self):
         return self.children.exists()
 
     def get_first_children(self):
-        return MenuItem.objects.filter(parent=self)
+        сhildren = MenuItem.objects.filter(parent=self)
+        logger.error(f'сhildren {сhildren}')
+        return сhildren
+
+
